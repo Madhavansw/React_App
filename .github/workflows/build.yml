@@ -1,29 +1,27 @@
 
-name: React Application Build
+name: Build
 
-# Trigger the workflow when code is pushed or a PR is created
 on:
   push:
     branches:
       - main
-      - develop
+      - 'feature/**'
 
   pull_request:
     branches:
       - main
-      - develop
 
 jobs:
   build:
-    name: Build React Application
+    name: React Build
     runs-on: ubuntu-latest
 
     steps:
-      # Step 1: Download the repository code
+      # Step 1: Checkout repository
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      # Step  2: Set up Node.js
+      # Step 2: Setup Node.js
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
