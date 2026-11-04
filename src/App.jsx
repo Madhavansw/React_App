@@ -6,6 +6,7 @@ function App() {
 
   return (
     <div>
+      <h1> welcome to automaticall building react Application!</h1>
       <Header />
 
       <hr />
