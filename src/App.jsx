@@ -6,16 +6,7 @@ function App() {
 
   return (
     <div>
-      <h1> Welcome to Automaticall building react Application!</h1>
-      <Header />
-
-      <hr />
-
-      <Profile />
-
-      <hr />
-
-      <Dashboard />
+      <Counter/>
     </div>
   );
 }
