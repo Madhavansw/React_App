@@ -1,5 +1,5 @@
 
-name: Build
+name: Build and Deploy
 
 on:
   push:
@@ -11,7 +11,14 @@ on:
     branches:
       - main
 
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
 jobs:
+
+  # Job 1: Build React application
   build:
     name: React Build
     runs-on: ubuntu-latest
@@ -32,6 +39,41 @@ jobs:
       - name: Install Dependencies
         run: npm ci
 
-      # Step 4: Build  React application
+      # Step 4: Build React application
       - name: Build React Application
         run: npm run build
+
+      # Step 5: Configure GitHub Pages (main push only)
+      - name: Configure GitHub Pages
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        uses: actions/configure-pages@v5
+
+      # Step 6: Upload build files
+      - name: Upload Build Artifact
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./dist
+
+  # Job 2: Deploy React application
+  deploy:
+    name: Deploy to GitHub Pages
+    needs: build
+    runs-on: ubuntu-latest
+
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+
+    permissions:
+      pages: write
+      id-token: write
+      contents: read
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      # Step 1: Deploy application
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
