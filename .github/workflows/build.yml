@@ -5,14 +5,17 @@ on:
   push:
     branches:
       - main
+      - integrate
       - 'feature/**'
 
   pull_request:
     branches:
       - main
+      - integrate
 
 permissions:
   contents: read
+  pages: read
 
 jobs:
 
@@ -37,28 +40,34 @@ jobs:
       - name: Build React Application
         run: npm run build
 
-      # Upload artifact only after merge into main
+      # Configure GitHub Pages for push events
+      - name: Configure GitHub Pages
+        if: github.event_name == 'push'
+        uses: actions/configure-pages@v5
+
+      # Upload build artifact
       - name: Upload Build Artifact
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        if: github.event_name == 'push'
         uses: actions/upload-pages-artifact@v3
         with:
           path: ./dist
 
-  # Job 2: Deploy application
+  # Job 2: Deploy React application
   deploy:
     name: Deploy React Application
     needs: build
     runs-on: ubuntu-latest
 
-    # Deploy only after code reaches main
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    if: github.event_name == 'push'
 
     permissions:
       pages: write
       id-token: write
+      contents: read
 
+    # Select environment based on branch
     environment:
-      name: github-pages
+      name: ${{ github.ref_name == 'main' && 'prod' || github.ref_name == 'integrate' && 'sit' || 'dev' }}
       url: ${{ steps.deployment.outputs.page_url }}
 
     steps:
