@@ -32,6 +32,6 @@ jobs:
       - name: Install Dependencies
         run: npm ci
 
-      # Step 4: Build React application
+      # Step 4: Build  React application
       - name: Build React Application
         run: npm run build
