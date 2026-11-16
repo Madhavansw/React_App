@@ -1,17 +1,19 @@
-import Header from "./components/Header";
-import Profile from "./components/Profile";
-import Dashboard from "./components/Dashboard";
-import CounterReducer from "./components/CounterReducer";
-import UsingReducer from "./components/UsingReducer";
-import CustomReducer from "./components/CustomReducer";
+import EmployeeList from "./components/EmployeeList";
+import EmployeeForm from "./components/EmployeeForm";
 
 function App() {
 
-  return (
-    <div>
-      <CustomReducer />
-    </div>
-  );
+    return (
+        <div>
+
+            <h1>Employee Management System</h1>
+
+            <EmployeeForm />
+
+            <EmployeeList />
+
+        </div>
+    );
 }
 
 export default App;

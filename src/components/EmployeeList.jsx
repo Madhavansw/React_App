@@ -1,30 +1,48 @@
-import { useEmployees } from "../context/EmployeeContext";
+import { useSelector, useDispatch } from "react-redux";
 
-function EmployeeList() {
+import { deleteEmployee } from "../redux/employeeSlice";
 
-  // Access Context Data
-  const { state } = useEmployees();
+const EmployeeList = () => {
 
-  return (
-    <div>
-      <h2>Employee List</h2>
+    // Read data from Redux store
+    const employees = useSelector(
+        state => state.employees.employees
+    );
 
-      {state.employees.map(employee => (
+    // Get dispatch function
+    const dispatch = useDispatch();
 
-        <div key={employee.id}>
+    const handleDelete = (id) => {
+        dispatch(deleteEmployee(id));
+    };
 
-          <h3>{employee.name}</h3>
+    return (
+        <div>
 
-          <p>{employee.designation}</p>
+            <h2>Employee List</h2>
 
-          <p>{employee.department}</p>
+            {employees.map(emp => (
+
+                <div key={emp.id}>
+
+                    <h3>{emp.name}</h3>
+
+                    <p>{emp.role}</p>
+
+                    <p>Salary: {emp.salary}</p>
+
+                    <button
+                        onClick={() => handleDelete(emp.id)}
+                    >
+                        Delete
+                    </button>
+
+                </div>
+
+            ))}
 
         </div>
-
-      ))}
-
-    </div>
-  );
-}
+    );
+};
 
 export default EmployeeList;
