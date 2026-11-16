@@ -65,7 +65,7 @@ jobs:
       id-token: write
       contents: read
 
-    # Select environment based on branch
+    # Select  environment based on branch
     environment:
       name: ${{ github.ref_name == 'main' && 'prod' || github.ref_name == 'integrate' && 'sit' || 'dev' }}
       url: ${{ steps.deployment.outputs.page_url }}
