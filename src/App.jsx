@@ -1,22 +1,19 @@
-import Header from "./components/Header";
-import Profile from "./components/Profile";
-import Dashboard from "./components/Dashboard";
+import EmployeeList from "./components/EmployeeList";
+import EmployeeForm from "./components/EmployeeForm";
 
 function App() {
 
-  return (
-    <div>
-      <Header />
+    return (
+        <div>
 
-      <hr />
+            <h1>Employee Management System</h1>
 
-      <Profile />
+            <EmployeeForm />
 
-      <hr />
+            <EmployeeList />
 
-      <Dashboard />
-    </div>
-  );
+        </div>
+    );
 }
 
 export default App;
